@@ -5,18 +5,20 @@
  */
 
 using Facepunch;
+using Rust;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Oxide.Plugins
 {
     [Info("Ignitable Mixing Tables", "VisEntities", "1.0.0")]
-    [Description(" ")]
+    [Description("Allows mixing tables to be ignited by igniters.")]
     public class IgnitableMixingTables : RustPlugin
     {
         #region Fields
 
         private static IgnitableMixingTables _plugin;
+        private const int LAYER_DEPLOYABLES = Layers.Mask.Deployed;
 
         #endregion Fields
 
@@ -48,7 +50,7 @@ namespace Oxide.Plugins
         private void IgniteMixingTablesInRange(Igniter igniter)
         {
             List<MixingTable> mixingTablesInRange = Pool.GetList<MixingTable>();
-            Vis.Entities(igniter.LineOfSightEyes.position, igniter.IgniteRange, mixingTablesInRange, 1237019409, QueryTriggerInteraction.Collide);
+            Vis.Entities(igniter.LineOfSightEyes.position, igniter.IgniteRange, mixingTablesInRange, LAYER_DEPLOYABLES, QueryTriggerInteraction.Collide);
 
             foreach (MixingTable mixingTable in mixingTablesInRange)
             {
