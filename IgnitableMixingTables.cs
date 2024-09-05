@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace Oxide.Plugins
 {
-    [Info("Ignitable Mixing Tables", "VisEntities", "1.0.0")]
+    [Info("Ignitable Mixing Tables", "VisEntities", "1.0.1")]
     [Description("Allows mixing tables to be ignited by igniters.")]
     public class IgnitableMixingTables : RustPlugin
     {
@@ -49,7 +49,7 @@ namespace Oxide.Plugins
 
         private void IgniteMixingTablesInRange(Igniter igniter)
         {
-            List<MixingTable> mixingTablesInRange = Pool.GetList<MixingTable>();
+            List<MixingTable> mixingTablesInRange = Pool.Get<List<MixingTable>>();
             Vis.Entities(igniter.LineOfSightEyes.position, igniter.IgniteRange, mixingTablesInRange, LAYER_DEPLOYABLES, QueryTriggerInteraction.Collide);
 
             foreach (MixingTable mixingTable in mixingTablesInRange)
@@ -65,7 +65,7 @@ namespace Oxide.Plugins
                 }
             }
 
-            Pool.FreeList(ref mixingTablesInRange);
+            Pool.FreeUnmanaged(ref mixingTablesInRange);
         }
 
         #endregion Mixing Table Ignition
